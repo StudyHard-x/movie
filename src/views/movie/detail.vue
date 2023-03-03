@@ -45,7 +45,15 @@
 
                   <a-layout-content style="margin-top: 40px">
                     <span style="font-weight: bold">RATE</span><br><br>
-                    <a-rate v-model="value" />
+                    <el-rate
+                      v-model="ratings"
+                      disabled
+                      show-score
+                      text-color="#ff9900"
+                      score-template="{value}">
+                    </el-rate>
+
+<!--                    <a-rate :value="ratings">-->
                   </a-layout-content>
                 </a-col>
               </a-row>
@@ -55,14 +63,15 @@
               <a-icon type="heart" />
               <span class="comment-title">Comment</span>
 <!--              未登录时无法留言-->
-              <a-comment>
+              <a-comment v-show="userId==0">
                 <a-avatar
                   slot="avatar"
                   icon="user"
                 />
                 <div slot="content">
                   <a-form-item>
-                    <a-textarea :rows="4" :value="value" @change="handleChange" />
+<!--                    <a-textarea :rows="4" :value="value" @change="handleChange" />-->
+                    <a-textarea :rows="4" />
                   </a-form-item>
                   <a-form-item>
                     <a-button html-type="submit" disabled>
@@ -72,38 +81,65 @@
                 </div>
               </a-comment>
 <!--              登录之后进行留言-->
-              <a-comment>
+              <a-comment v-show="userId!=0">
                 <a-avatar
                   slot="avatar"
                   src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                   alt="Han Solo"
                 />
                 <div slot="content">
-                  <a-form-item>
-                    <a-textarea :rows="4" :value="value" @change="handleChange" />
-                  </a-form-item>
-                  <a-form-item>
-                    <a-button html-type="submit" :loading="submitting" type="info" @click="handleSubmit">
-                      leave Comment
-                    </a-button>
-                  </a-form-item>
+                  <a-form :model="commentForm">
+                    <a-form-item>
+                      <a-textarea :rows="4" v-model:value="commentForm.comments"
+                                  placeholder="Leave your comments"/>
+                    </a-form-item>
+                    <a-form-item>
+                      <a-button html-type="submit"
+                                 type="info" @click="open">
+                        leave Comment
+                      </a-button>
+                    </a-form-item>
+                  </a-form>
+
                 </div>
+<!--                comments-->
+<!--                :-->
+<!--                "bad story"-->
+<!--                ratings-->
+<!--                :-->
+<!--                10-->
+<!--                reviewTime-->
+<!--                :-->
+<!--                "2023-03-01 11:33:39"-->
               </a-comment>
+
               <a-list
                 class="comment-list"
                 :header="`${data.length} comments`"
                 item-layout="horizontal"
                 :data-source="data">
                 <a-list-item slot="renderItem" slot-scope="item, index">
-                  <a-comment :author="item.author" :avatar="item.avatar">
-                    <template slot="actions">
-                      <span v-for="action in item.actions">{{ action }}</span>
-                    </template>
+                  <a-comment :author="item.username">
+<!--              <a-comment :author="item.author" :avatar="item.avatar">-->
+
+                    <!--                    <template slot="actions">-->
+<!--                      <span v-for="action in item.actions">{{ action }}</span>-->
+<!--                    </template>-->
+<!--                    <p>RATE</p>-->
+<!--                    <a-rate v-model="item.ratings" />-->
+                    <el-rate
+                      v-model="item.ratings"
+                      disabled
+                      show-score
+                      text-color="#ff9900"
+                      score-template="{value}">
+                    </el-rate>
+
                     <p slot="content">
-                      {{ item.content }}
+                      {{ item.comments }}
                     </p>
                     <a-tooltip slot="datetime">
-                      <span>{{ item.datetime }}</span>
+                      <span>{{ item.reviewTime }}</span>
                     </a-tooltip>
                   </a-comment>
                 </a-list-item>
@@ -113,12 +149,22 @@
           </a-layout>
         </a-layout-content>
 
-
-
         <a-layout-footer style="text-align: center;">
           Movies
         </a-layout-footer>
       </a-layout>
+
+      <el-dialog title="rate" :visible.sync="dialogFormVisible">
+        <el-form :model="commentForm">
+          <el-form-item>
+            <el-rate v-model="value1"></el-rate>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="leaveComment">确 定</el-button>
+        </div>
+      </el-dialog>
 <!--        <el-header class="index-header">-->
 <!--          <usernav></usernav>-->
 <!--          1111111111111111111111111-->
@@ -131,31 +177,43 @@
 <script>
   // 导入组件
   import usernav from "../../components/usernav";
-  import {getMovie} from "../../api/axiosMovie";
+  import {addComment, getComment, getMovie} from "../../api/axiosMovie";
+  import { Message } from "element-ui";
   export default {
+
     name: 'homepage',
     data() {
       return {
+        value1:null,
+        dialogFormVisible: false,
+        ratings: 0,
+        userId:0,
         movieList:{
 
         },
+        commentForm:{
+          movie_id: 0,
+          comments: '',
+          ratings: 0,
+        },
+        commentList:[],
         data: [
-          {
-            actions: ['Reply to'],
-            author: 'Han Solo',
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            content:
-              'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-            datetime: 2019
-          },
-          {
-            actions: ['Reply to'],
-            author: 'Han Solo',
-            avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-            content:
-              'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-            datetime: 2022
-          },
+          // {
+          //   actions: ['Reply to'],
+          //   author: 'Han Solo',
+          //   avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+          //   content:
+          //     'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+          //   datetime: 2019
+          // },
+          // {
+          //   actions: ['Reply to'],
+          //   author: 'Han Solo',
+          //   avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+          //   content:
+          //     'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+          //   datetime: 2022
+          // },
         ],
       }
     },
@@ -173,13 +231,19 @@
       usernav
     },
     methods: {
+      open() {
+        this.dialogFormVisible = true
+      },
+
       movieDetail(id){
         getMovie(id,'id')
           .then(res => {
             if (res) {
-              // console.log(res)
-              this.movieList = res.data
-              console.log('movielist: ', this.movieList)
+              setTimeout(()=>{
+                this.movieList = res.data
+                // this.movieComment(id)
+              },1000)
+              // console.log('movielist: ', this.movieList)
             } else {
               this.$message({
                 type: 'info',
@@ -187,6 +251,41 @@
               })
             }
           })
+      },
+      movieComment(id){
+        getComment(id,'id').then(res=>{
+          if(res){
+            // console.log(res.data.avgRatings)
+            this.ratings = res.data.avgRatings
+            this.data = res.data.pageData.data
+          }
+          // console.log(this.data)
+          }
+        )
+      },
+      leaveComment(){
+        this.dialogFormVisible = false
+        // console.log(this.value1)
+        this.commentForm.movie_id = this.movieId
+        this.commentForm.ratings = this.value1
+        console.log(this.commentForm)
+        addComment(this.commentForm).then(res => {
+          if (res) {
+            setTimeout(()=>{
+              Message({
+                type: 'info',
+                message: "leave message success"
+              })
+            },1000)
+            // console.log('movielist: ', this.movieList)
+          } else {
+            Message({
+              type: 'info',
+              message: "fail"
+            })
+          }
+        })
+
       },
       //movie start
       // cllickMovie(){
@@ -222,28 +321,28 @@
       },
 
       getInfo(){
-        this.userGet.userId = JSON.parse(localStorage.getItem("userdata")).id
-        console.log("user info test: ", this.userGet)
-        getUserInfo(this.userGet)
-          .then(res => {
-            console.log("user info: ",res)
-            if (res) {
-              localStorage.setItem('userdata', JSON.stringify(res))
-              this.userInfo = JSON.parse(localStorage.getItem("userdata"))
-              // this.$message({
-                // type: 'success',
-                // message: "ok"
-              // })
-            } else {
-              this.$message({
-                type: 'info',
-                message: "get user info"
-              })
-            }
-          })
-          .catch(err => {
-            this.$message.error('get user message fail')
-          })
+        // this.userGet.userId = JSON.parse(localStorage.getItem("userdata")).id
+        // console.log("user info test: ", this.userGet)
+        // getUserInfo(this.userGet)
+        //   .then(res => {
+        //     console.log("user info: ",res)
+        //     if (res) {
+        //       localStorage.setItem('userdata', JSON.stringify(res))
+        //       this.userInfo = JSON.parse(localStorage.getItem("userdata"))
+        //       // this.$message({
+        //         // type: 'success',
+        //         // message: "ok"
+        //       // })
+        //     } else {
+        //       this.$message({
+        //         type: 'info',
+        //         message: "get user info"
+        //       })
+        //     }
+        //   })
+        //   .catch(err => {
+        //     this.$message.error('get user message fail')
+        //   })
       },
 
       closeDialog() {
@@ -254,6 +353,13 @@
 
       this.movieId = this.$route.params.movieId
       this.movieDetail(this.movieId)
+      this.movieComment(this.movieId)
+      if (this.userId = JSON.parse(localStorage.getItem('userData')).id){
+        console.log('this.userId 1 : ',this.userId)
+      }
+      else {
+        console.log('this.userId 2 : ',this.userId)
+      }
       // this.userInfo = JSON.parse(localStorage.getItem("userdata"))
       // console.log(this.userInfo)
     },
