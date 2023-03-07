@@ -84,8 +84,7 @@
               <a-comment v-show="userId!=0">
                 <a-avatar
                   slot="avatar"
-                  src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                  alt="Han Solo"
+                  icon="user"
                 />
                 <div slot="content">
                   <a-form :model="commentForm">
@@ -119,7 +118,11 @@
                 item-layout="horizontal"
                 :data-source="data">
                 <a-list-item slot="renderItem" slot-scope="item, index">
-                  <a-comment :author="item.username">
+                  <a-comment :author="item.username" >
+                    <a-avatar
+                      slot="avatar"
+                      icon="user"
+                    />
 <!--              <a-comment :author="item.author" :avatar="item.avatar">-->
 
                     <!--                    <template slot="actions">-->

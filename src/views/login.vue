@@ -39,6 +39,7 @@
 <script type="text/ecmascript-6">
   import { login,getLoginUser } from '../api/userMG'
   import { setCookie, getCookie, delCookie } from '../utils/util'
+  import { Message } from 'element-ui'
   import md5 from 'js-md5'
   export default {
     name: 'login',
@@ -57,7 +58,7 @@
         rules: {
           username: [{ required: true, message: 'Please enter user name', trigger: 'blur' }],
           password: [{ required: true, message: 'Please enter password', trigger: 'blur' }],
-          // code: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
+          // code: [{ required: true, message: 'code', trigger: 'blur' }]
         }
       }
     },
@@ -78,34 +79,6 @@
           this.rememberpwd = true
         }
       },
-      //get info list
-      // submitForm(formName) {
-      //   this.$refs[formName].validate(valid => {
-      //     if (valid) {
-      //       this.logining = true
-      //       // testing
-      //       setTimeout(() => {
-      //         this.logining = false
-      //         this.$store.commit('login', 'true')
-      //         console.log('userType', this.userType)
-      //         localStorage.setItem('userRole', this.userType)
-      //
-      //         if(this.userType == 0){
-      //           this.$router.push({ path: '/home' })
-      //         }
-      //         if(this.userType == 1){
-      //           this.$router.push({path:'/operators/track'})
-      //         }
-      //       }, 1000)
-      //     } else {
-      //       // 获取图形验证码
-      //       // this.getcode()
-      //       this.$message.error('please enter username and password！')
-      //       this.logining = false
-      //       return false
-      //     }
-      //   })
-      // },
 
       submitForm(formName) {
         this.$refs[formName].validate(valid => {
@@ -131,27 +104,26 @@
                         if(resuser.data.type == 0){
                           this.$router.push({path:'/operators/track'})
                         }
-                        if(res.userType == 8){
-                          this.$router.push({path:'/manager/datavis'})
-                        }
+                        // if(res.userType == 1){
+                        //   this.$router.push({path:'/manager/datavis'})
+                        // }
                       },1000)
                     }
                   })
 
                 }, 1000)
               } else {
-                this.$message.error(res.msg)
+                Message.error(res.msg)
                 this.logining = false
                 return false
               }
             }).catch(err => {
-              this.$message.error(err.response.data)
+              Message.error(err.response.data)
               this.logining = false
             })
           } else {
-            // 获取图形验证码
             // this.getcode()
-            this.$message.error('please enter username and password！')
+            Message.error('please enter username and password！')
             this.logining = false
             return false
           }
@@ -185,11 +157,6 @@
     text-align: left;
     box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.1);
   }
-  .title {
-    margin: 0px auto 40px auto;
-    text-align: center;
-    color: #505458;
-  }
   .forgot {
     font-size: 4px;
     padding-left: 170px;
@@ -200,13 +167,4 @@
     text-align: center;
     align: center;
   }
-  .register{
-    margin: 20px auto;
-  }
-  /*.code-box {*/
-  /*  text-align: right;*/
-  /*}*/
-  /*.codeimg {*/
-  /*  height: 40px;*/
-  /*}*/
 </style>

@@ -1,8 +1,8 @@
-import { loginreq, req, reqA,formreq } from './axiosFun';
+import { req,formreq } from './axiosFun';
 
-export const searchMovie = (params) => {
-  console.log("search: ", params)
-  return req("post", "api/user/logout", params)
+export const searchMovie = (params,params2) => {
+  // console.log("search: ", params)
+  return formreq("get", "api/movies/contain", params,params2)
 };
 
 export const getMovie = (params,params2) => {
@@ -11,13 +11,13 @@ export const getMovie = (params,params2) => {
 };
 
 export const getAdminInfo = () => {
-  return req("get", "api/adminInfo/adminInfo/")
+  return req("get", "api/admins/page/")
 };
 
 // getPageInfo
-export const getAllMovie = () => {
+export const getAllMovie = (params, params2) => {
   // console.log("search: ")
-  return req("get", "api/movies/page/")
+  return formreq("get", "api/movies/newest/", params, params2)
 };
 
 export const getComment = (params,params2)=>{

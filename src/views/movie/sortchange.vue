@@ -38,8 +38,8 @@
 
     },
     created() {
-      console.log("this page is sort change")
       const val = this.$route.params.sortName
+      // console.log('sort change: ',val)
       this.$router.push({
         name: 'movies',
         params: {

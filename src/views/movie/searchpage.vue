@@ -13,7 +13,7 @@
 
         <a-layout-content class="detail-layout" style="padding: 0 200px">
           <a-layout style="padding: 24px 0; background: #fff; min-height: 560px; padding-left: 120px">
-            <span class="search-name">Search Result: {{searchName}}</span>
+            <span class="search-name">Search : {{searchName}}</span>
 
             <a-list item-layout="horizontal" size="large" :data-source="listData">
               <a-list-item slot="renderItem" key="item.title" slot-scope="item, index">
@@ -22,21 +22,21 @@
                   <a-row :gutter="16">
                     <a-col :span="8">
                       <p style="fontSize: 14px;color: rgba(0, 0, 0, 0.85); marginBottom: 16px;fontWeight: 500">
-                        {{ item.title }}
+                        {{ item.movie_name }}
                       </p>
                       <a-card hoverable style="width: 200px">
                         <img
                           slot="cover"
                           alt="example"
-                          src="../../assets/img/rings.jpg"
+                          :src="require(`../../assets/img/${item.movie_name}.jpg`)"
                         />
                       </a-card>
                     </a-col>
 
                     <a-col :span="14">
                       <a-layout-content style="min-height: 250px">
-                        <span>MOVIE INFO</span><br><br>
-                        <span> {{item.content}} </span>
+                        <span></span><br><br>
+                        <span> {{item.movie_intro}} </span>
                       </a-layout-content>
 
                       <a-layout-content style="margin-top: 40px">
@@ -52,17 +52,11 @@
           </a-layout>
         </a-layout-content>
 
-
-
         <a-layout-footer style="text-align: center;">
           Movies
         </a-layout-footer>
       </a-layout>
-<!--        <el-header class="index-header">-->
-<!--          <usernav></usernav>-->
-<!--          1111111111111111111111111-->
-<!--          22222222-->
-<!--        </el-header>-->
+
 
 
   </div>
@@ -70,6 +64,7 @@
 <script>
   // 导入组件
   import usernav from "../../components/usernav";
+  import {searchMovie} from "../../api/axiosMovie";
   export default {
     name: 'searchpage',
     data() {
@@ -77,15 +72,7 @@
         movieName:'',
         data: [],
         searchName:'',
-        listData:[
-          { title: 'search result 1',
-            content:
-              "The sequel to the Golden Globe-nominated and AFI Award-winning \"The Lord of the Rings: The Fellowship of the Ring,\" \"The Two Towers\" follows the continuing quest of Frodo (Elijah Wood) and the Fellowship to destroy the One Ring. Frodo and Sam (Sean Astin) discover they are being followed by the mysterious Gollum. Aragorn (Viggo Mortensen), the Elf archer Legolas and Gimli the Dwarf encounter the besieged Rohan kingdom, whose once great King Theoden has fallen under Saruman's deadly spell."
-          },{
-          title: 'search result 2',
-            content: "22232323e1"
-          }
-        ],
+        listData:[],
       }
     },
 
@@ -102,10 +89,20 @@
       usernav
     },
     methods: {
-
+      serach(movieName){
+        searchMovie(movieName,'contain').then(res => {
+          if (res) {
+            setTimeout(()=>{
+              console.log('search res: ', res)
+              this.listData = res.data
+            },500)
+          }
+        })
+      }
     },
     created() {
       this.searchName = this.$route.params.searchName
+      this.serach(this.searchName)
     },
     beforeUpdate() {},
     beforeMount() {

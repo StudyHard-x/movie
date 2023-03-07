@@ -50,38 +50,37 @@
 
       </a-layout>
 
-    <el-container class="index-con">
-  <!--    <el-aside :class="showclass">-->
-  <!--      <leftnav></leftnav>-->
-  <!--    </el-aside>-->
-      <el-container>
-<!--          <usernav></usernav>-->
-        <el-main>
-          <el-card v-show="(path ==='/users/userHome')" class="home-container">
-            <div class="userInfoClass">
-              <h4>username: {{this.userInfo.username}}</h4>
-              <h4>balance: {{this.userInfo.charge}}</h4>
-              <el-button  style="color: #6f7180; font-size: 15px"  v-on:click="clickCharge">charge money</el-button>
-              <el-dialog :title="title" :visible.sync="chargeFormVisible" width="30%" @click="closeDialog">
-                <el-form label-width="120px" :model="chargeForm" ref="editForm">
-                  <el-form-item label="charge" prop="fee">
-                    <el-input size="small" v-model="chargeForm.fee" auto-complete="off" placeholder="please enter money"></el-input>
-                  </el-form-item>
-                </el-form>
-                <el-button type="primary"@click="chargeMoney">charge money</el-button>
-              </el-dialog>
-            </div>
-          </el-card>
+<!--    <el-container class="index-con">-->
+<!--  &lt;!&ndash;    <el-aside :class="showclass">&ndash;&gt;-->
+<!--  &lt;!&ndash;      <leftnav></leftnav>&ndash;&gt;-->
+<!--  &lt;!&ndash;    </el-aside>&ndash;&gt;-->
+<!--      <el-container>-->
+<!--&lt;!&ndash;          <usernav></usernav>&ndash;&gt;-->
+<!--        <el-main>-->
+<!--          <el-card v-show="(path ==='/users/userHome')" class="home-container">-->
+<!--            <div class="userInfoClass">-->
+<!--              <h4>username: {{this.userInfo.username}}</h4>-->
+<!--              <h4>balance: {{this.userInfo.charge}}</h4>-->
+<!--              <el-button  style="color: #6f7180; font-size: 15px"  v-on:click="clickCharge">charge money</el-button>-->
+<!--              <el-dialog :title="title" :visible.sync="chargeFormVisible" width="30%" @click="closeDialog">-->
+<!--                <el-form label-width="120px" :model="chargeForm" ref="editForm">-->
+<!--                  <el-form-item label="charge" prop="fee">-->
+<!--                    <el-input size="small" v-model="chargeForm.fee" auto-complete="off" placeholder="please enter money"></el-input>-->
+<!--                  </el-form-item>-->
+<!--                </el-form>-->
+<!--                <el-button type="primary"@click="chargeMoney">charge money</el-button>-->
+<!--              </el-dialog>-->
+<!--            </div>-->
+<!--          </el-card>-->
 
-          <router-view></router-view>
-        </el-main>
-      </el-container>
-    </el-container>
+<!--          <router-view></router-view>-->
+<!--        </el-main>-->
+<!--      </el-container>-->
+<!--    </el-container>-->
   </div>
 </template>
 <script>
   // 导入组件
-  import {recharge, getUserInfo} from "../api/userMG";
   import usernav from "../components/usernav";
   import sortpage from "../components/sortpage";
   export default {
@@ -93,20 +92,19 @@
         userGet:{
           userId : 0
         },
-        chargeForm:{
-          id : 0,
-          fee : 0,
-        },
+        // chargeForm:{
+        //   id : 0,
+        //   fee : 0,
+        // },
         balance: 0,
         showclass: 'asideshow',
         showtype: false,
         path:'',
-        title : "charge",
+        // title : "charge",
       }
     },
     mounted() {
       this.path = this.$route.path;
-      // console.log(this.$route.path)
     },
     watch:{
       $route(to,from){
