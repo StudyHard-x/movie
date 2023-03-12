@@ -1,3 +1,9 @@
+<!--
+* @FileDescription: admin check user
+* @Student number: 2750443X
+* @LastEditors: Chuheng Xiang
+-->
+
 <template>
   <div>
 
@@ -63,9 +69,9 @@
         </template>
       </el-table-column>
     </el-table>
-    <!-- 分页组件 -->
+    <!-- Pagination -->
 <!--    <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>-->
-    <!-- 编辑界面 -->
+    <!-- eidt page -->
     <el-dialog :title="title" :visible.sync="editFormVisible" width="30%" @click="closeDialog">
       <el-form label-width="120px" :model="editForm" :rules="rules" ref="editForm">
         <el-form-item label="user Id" prop="vehicleId">
@@ -99,11 +105,11 @@ export default {
       },
       value: '',
       options: [{
-        value: '1',
-        label: 'Glasgow'
+        value: 0,
+        label: 0
       }, {
-        value: '2',
-        label: 'Edinburgh'
+        value: 0,
+        label: 0
       }
       ],
 

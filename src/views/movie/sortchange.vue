@@ -12,8 +12,6 @@
 </template>
 <script>
 
-  // 导入组件
-
   export default {
     name: 'sortchange',
     data() {

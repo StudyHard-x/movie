@@ -6,7 +6,7 @@
 <template>
     <div>
       <a-layout>
-        <a-layout-header class="header" style="height: 130px">
+        <a-layout-header class="header" style="height: 60px">
           <usernav></usernav>
         </a-layout-header>
 
@@ -29,7 +29,7 @@
                 </a-col>
 
                 <a-col :span="10">
-                  <a-layout-content style="min-height: 300px">
+                  <a-layout-content style="min-height: 380px; max-height: 383px">
                     <span style="font-weight: bold">MOVIE INFO</span><br><br>
                     <span>{{movieList.movie_intro}}</span>
                   </a-layout-content>
@@ -164,15 +164,10 @@
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="leaveComment">确 定</el-button>
+          <el-button @click="dialogFormVisible = false">cancel</el-button>
+          <el-button type="primary" @click="leaveComment">submit</el-button>
         </div>
       </el-dialog>
-<!--        <el-header class="index-header">-->
-<!--          <usernav></usernav>-->
-<!--          1111111111111111111111111-->
-<!--          22222222-->
-<!--        </el-header>-->
 
 
   </div>
@@ -201,22 +196,6 @@
         },
         commentList:[],
         data: [
-          // {
-          //   actions: ['Reply to'],
-          //   author: 'Han Solo',
-          //   avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-          //   content:
-          //     'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-          //   datetime: 2019
-          // },
-          // {
-          //   actions: ['Reply to'],
-          //   author: 'Han Solo',
-          //   avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-          //   content:
-          //     'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-          //   datetime: 2022
-          // },
         ],
       }
     },
@@ -275,13 +254,16 @@
         addComment(this.commentForm).then(res => {
           if (res) {
             setTimeout(()=>{
+              this.movieComment(this.movieId)
               Message({
                 type: 'info',
                 message: "leave message success"
               })
             },1000)
+            this.commentForm={brand_right:0}
             // console.log('movielist: ', this.movieList)
-          } else {
+          }
+          else {
             Message({
               type: 'info',
               message: "fail"

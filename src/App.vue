@@ -10,7 +10,7 @@ export default {
 };
 </script>
 
-<style> 
+<style>
 html,
 body {
     width: 100%;
@@ -20,11 +20,13 @@ body {
     margin: 0px;
 }
 #app {
+
     font-family: "Avenir", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-    widows: 100%;
+    /*widows: 100%;*/
     height: 100%;
+    width: 100%;
 }
 </style>

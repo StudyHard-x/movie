@@ -1,13 +1,19 @@
+<!--
+* @FileDescription: home page
+* @Author: Chuheng Xiang
+* @Student number: 2750443X
+* @LastEditors: Chuheng Xiang
+-->
+
 <template>
     <div>
       <a-layout>
-        <a-layout-header class="header" style="height: 130px">
+        <a-layout-header class="header" style="height: 60px">
           <usernav></usernav>
         </a-layout-header>
-<!--        轮播图-->
-        <a-layout-content style="padding: 0 150px;">
 
-          <el-carousel :interval="4000" type="card" height="400px">
+        <a-layout-content style="padding: 0 150px;">
+          <el-carousel :interval="4000" type="card" height="350px">
             <el-carousel-item>
               <img style="width: 600px" src="../assets/img/start_wars.jpg">
             </el-carousel-item>
@@ -45,38 +51,14 @@
           </a-layout>
         </a-layout-content>
         <a-layout-footer class="home-footer">
-          Movies
+          <el-link type="primary">Help</el-link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <el-link type="primary">Conditions of Use</el-link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <el-link type="primary">Privacy Notice</el-link>
+          <br><br>
+          <p>movie-review-website</p>
         </a-layout-footer>
 
       </a-layout>
-
-<!--    <el-container class="index-con">-->
-<!--  &lt;!&ndash;    <el-aside :class="showclass">&ndash;&gt;-->
-<!--  &lt;!&ndash;      <leftnav></leftnav>&ndash;&gt;-->
-<!--  &lt;!&ndash;    </el-aside>&ndash;&gt;-->
-<!--      <el-container>-->
-<!--&lt;!&ndash;          <usernav></usernav>&ndash;&gt;-->
-<!--        <el-main>-->
-<!--          <el-card v-show="(path ==='/users/userHome')" class="home-container">-->
-<!--            <div class="userInfoClass">-->
-<!--              <h4>username: {{this.userInfo.username}}</h4>-->
-<!--              <h4>balance: {{this.userInfo.charge}}</h4>-->
-<!--              <el-button  style="color: #6f7180; font-size: 15px"  v-on:click="clickCharge">charge money</el-button>-->
-<!--              <el-dialog :title="title" :visible.sync="chargeFormVisible" width="30%" @click="closeDialog">-->
-<!--                <el-form label-width="120px" :model="chargeForm" ref="editForm">-->
-<!--                  <el-form-item label="charge" prop="fee">-->
-<!--                    <el-input size="small" v-model="chargeForm.fee" auto-complete="off" placeholder="please enter money"></el-input>-->
-<!--                  </el-form-item>-->
-<!--                </el-form>-->
-<!--                <el-button type="primary"@click="chargeMoney">charge money</el-button>-->
-<!--              </el-dialog>-->
-<!--            </div>-->
-<!--          </el-card>-->
-
-<!--          <router-view></router-view>-->
-<!--        </el-main>-->
-<!--      </el-container>-->
-<!--    </el-container>-->
   </div>
 </template>
 <script>
@@ -87,20 +69,11 @@
     name: 'homepage',
     data() {
       return {
-        chargeFormVisible : false,
         userInfo :[],
         userGet:{
           userId : 0
         },
-        // chargeForm:{
-        //   id : 0,
-        //   fee : 0,
-        // },
-        balance: 0,
-        showclass: 'asideshow',
-        showtype: false,
         path:'',
-        // title : "charge",
       }
     },
     mounted() {
@@ -116,12 +89,6 @@
       sortpage
     },
     methods: {
-      clickCharge(){
-        this.chargeFormVisible = true
-      },
-      closeDialog() {
-        this.chargeFormVisible = false
-      }
     },
     created() {
     },
@@ -137,13 +104,6 @@
 </script>
 
 <style scoped>
-.userInfoClass{
-  color: #909399;
-  font-size: 25px;
-  text-align: center;
-  margin: 30px auto;
-  align: center;
-}
 /*.backImage{*/
   /*background-repeat: no-repeat;*/
   /*background-position: center right;*/
@@ -154,16 +114,6 @@
   /*position:fixed;*/
   /*background-size:100% 100%;*/
  /*}*/
-.home-container{
-  border-radius: 10px;
-  margin: 100px auto;
-  width: 300px;
-  /*height: 400px;*/
-  padding: 30px 35px 15px 35px;
-  background: #fff;
-  border: 1px solid #eaeaea;
-  /*box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.1);*/
-}
 .ant-carousel >>> .slick-slide {
   text-align: center;
   height: 360px;
