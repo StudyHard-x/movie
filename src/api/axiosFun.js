@@ -69,7 +69,6 @@ export const formreq = (method, url, params, params2)=>{
   return axios({
     method: method,
     url: `${url}?${params2}=${params}`,
-    // traditional: true,
   }).then(res => res.data);
 };
 

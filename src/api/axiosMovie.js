@@ -27,3 +27,11 @@ export const getComment = (params,params2)=>{
 export const addComment = (params)=>{
   return req("post", "api/reviewlogs/add/", params)
 }
+
+export const allComment = ()=>{
+  return req("get", "api/reviewlogs/display")
+}
+
+export const deleteComment = (params)=>{
+  return req("post", "api/reviewlogs/del/", params)
+}
