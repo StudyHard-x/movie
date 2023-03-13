@@ -11,11 +11,13 @@
         <a-layout-header class="header" style="height: 60px">
           <usernav></usernav>
         </a-layout-header>
-        <a-layout-content style="padding: 0 150px">
-          <a-layout style="padding: 24px 0; background: #fff; min-height: 560px">
+        <a-layout-content style="padding: 0 150px; background: black;">
+          <a-layout style="padding: 24px 0; background: black; min-height: 560px">
             <a-layout-content :style="{ padding: '0 24px', minHeight: '50px', width:'450px', paddingBottom:'60px' }">
-              <span class="sort-name">{{'Sort by: ', sortName}} {{sortName}} </span>
+              <div v-if="genre!=null"><span class="sort-name" >Genre: {{genre}} </span></div>
+              <span class="sort-name" v-show="sortName!=null">Sort by {{sortName}}</span>
               <br>
+              <span class="sort-name">{{'Sort: ', sortName}} </span>
               <a-select
                 showSearch
                 optionFilterProp="children"
@@ -36,7 +38,7 @@
 
         </a-layout-content>
 
-        <a-layout-footer style="text-align: center;">
+        <a-layout-footer class="movie-footer">
           <el-link type="primary">Help</el-link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <el-link type="primary">Conditions of Use</el-link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <el-link type="primary">Privacy Notice</el-link>
@@ -50,14 +52,13 @@
 <script>
 
   // 导入组件
-  import {getUserInfo} from "../api/userMG";
-  import {getMovie} from "../api/axiosMovie"
   import sortpage from "../components/sortpage";
   import usernav from "../components/usernav";
   export default {
     name: 'movies',
     data() {
       return {
+        genre:'',
         sortName:'',
         sortMovieList:[
           'NEWEST',
@@ -87,12 +88,15 @@
           name: 'sortchange',
           params: {
             sortName: value,
+            genre: this.genre,
           }
         })
       },
     },
     created() {
+      this.genre = this.$route.params.genre
       this.sortName = this.$route.params.sortName
+      // console.log(this.genre != '')
       // console.log('sortName is(movie page): ', this.sortName)
     },
     beforeUpdate() {},
@@ -102,13 +106,6 @@
 </script>
 
 <style scoped>
-.userInfoClass{
-  color: #909399;
-  font-size: 25px;
-  text-align: center;
-  margin: 30px auto;
-  align: center;
-}
 /*.backImage{*/
 /*  !*background-repeat: no-repeat;*!*/
 /*  background-position: center right;*/
@@ -119,19 +116,17 @@
 /*  position:fixed;*/
 /*  background-size:100% 100%;*/
 /* }*/
-.home-container{
-  border-radius: 10px;
-  margin: 100px auto;
-  width: 300px;
-  /*height: 400px;*/
-  padding: 30px 35px 15px 35px;
-  background: #fff;
-  border: 1px solid #eaeaea;
-  /*box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.1);*/
-}
+
   .sort-name{
+    color: white;
     font-weight: bold;
     font-size: 20px;
+  }
+  .movie-footer{
+    background: black;
+    color: white;
+    font-family: Verdana;
+    text-align: center;
   }
 </style>
 
