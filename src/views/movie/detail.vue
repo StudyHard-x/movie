@@ -383,8 +383,8 @@
 
 }
 .detail-footer{
-  /*background: black;*/
-  color: black;
+  background: black;
+  color: white;
   font-family: Verdana;
   text-align: center;
 }

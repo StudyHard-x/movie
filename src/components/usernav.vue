@@ -12,7 +12,7 @@
 <!--      <a-menu v-model="current" mode="horizontal" theme="dark"-->
 <!--      :defaultSelectedKeys="[$route.path]">-->
       <a-menu mode="horizontal" theme="dark">
-        <a-menu-item> <a-input-search placeholder="Search movies" style="width: 200px" @search="onSearch" /></a-menu-item>
+        <a-menu-item> <a-input-search placeholder="Search movies" style="width: 280px; padding-left: 80px" @search="onSearch" /></a-menu-item>
         <a-menu-item key="home"> <router-link :to="{path:'/home'}"> <a-icon type="home" />
           <span class="nav-span">Home</span></router-link>
         </a-menu-item>
@@ -25,7 +25,7 @@
 
         <a-menu-item class="user_info"  v-show="userId==0" >
           <router-link to="/login">
-          Login
+            <span class="user-info-font">Sign In</span>
           </router-link>
         </a-menu-item>
 
@@ -139,12 +139,20 @@
 
 <style scoped>
   .user_info{
+    /*padding-top: 6px;*/
+    font-size: 20px;
     float: right;
+    padding-right: 110px;
+    font-weight: bold;
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   }
   .nav-span{
     color: white;
     font-size: 20px;
     font-weight: bold;
     font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+  .user-info-font{
+    color: white;
   }
 </style>

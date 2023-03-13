@@ -24,16 +24,16 @@ import searchpage from "../views/movie/searchpage";
 import sortchange from "../views/movie/sortchange";
 import profile from "../views/users/profile";
 
-// 启用路由
+// use Router
 Vue.use(Router);
 const originalPush = Router.prototype.push
-//修改原型对象中的push方法
+//change original push
 Router.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 
 
-// 导出路由
+// export router
 export default new Router({
   routes: [
     {
