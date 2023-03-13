@@ -11,7 +11,7 @@
     <div class="nav-class">
 <!--      <a-menu v-model="current" mode="horizontal" theme="dark"-->
 <!--      :defaultSelectedKeys="[$route.path]">-->
-      <a-menu  mode="horizontal" theme="dark">
+      <a-menu mode="horizontal" theme="dark">
         <a-menu-item> <a-input-search placeholder="Search movies" style="width: 200px" @search="onSearch" /></a-menu-item>
         <a-menu-item key="home"> <router-link :to="{path:'/home'}"> <a-icon type="home" />
           <span class="nav-span">Home</span></router-link>

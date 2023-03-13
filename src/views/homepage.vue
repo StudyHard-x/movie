@@ -6,8 +6,8 @@
 -->
 
 <template>
-    <div>
-      <a-layout>
+    <div >
+      <a-layout class="home-page">
         <a-layout-header class="header" style="height: 60px">
           <usernav></usernav>
         </a-layout-header>
@@ -42,29 +42,27 @@
 <!--            </div>-->
 <!--          </a-carousel>-->
 
-          <a-layout style="padding: 24px 0; background: #fff; min-height: 560px">
+          <a-layout class="home-movie">
             <a-layout-content>
 <!--              <span class="home-intro">| MOVIE </span>-->
-              <a-divider class="home-intro">MOVIE</a-divider>
+<!--              <a-divider class="home-intro">MOVIE</a-divider>-->
               <sortpage></sortpage>
             </a-layout-content>
           </a-layout>
         </a-layout-content>
         <a-layout-footer class="home-footer">
-          <el-link type="primary">Help</el-link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <el-link type="primary">Conditions of Use</el-link>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <el-link type="primary">Privacy Notice</el-link>
-          <br><br>
-          <p>movie-review-website</p>
+          <userfooter></userfooter>
         </a-layout-footer>
 
       </a-layout>
   </div>
 </template>
 <script>
-  // 导入组件
+  // 导入组
+  import userfooter from "../components/userfooter";
   import usernav from "../components/usernav";
   import sortpage from "../components/sortpage";
+
   export default {
     name: 'homepage',
     data() {
@@ -85,6 +83,7 @@
       }
     },
     components: {
+      userfooter,
       usernav,
       sortpage
     },
@@ -114,6 +113,15 @@
   /*position:fixed;*/
   /*background-size:100% 100%;*/
  /*}*/
+.home-page{
+  background: black;
+}
+.home-movie{
+  padding: 24px 0;
+  /*background: #fff;*/
+  background: black;
+  min-height: 560px;
+}
 .ant-carousel >>> .slick-slide {
   text-align: center;
   height: 360px;
@@ -141,9 +149,14 @@
   color: #fff;
 }
 .home-intro{
+  font-family: Lucida Console;
+  color: white;
   font-size: 30px;
   font-weight: bold;
 }.home-footer{
+  background: black;
+  color: white;
+  font-family: Verdana;
   text-align: center;
  }
 

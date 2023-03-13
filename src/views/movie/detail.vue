@@ -152,8 +152,8 @@
           </a-layout>
         </a-layout-content>
 
-        <a-layout-footer style="text-align: center;">
-          Movies
+        <a-layout-footer class="detail-footer">
+          <userfooter></userfooter>
         </a-layout-footer>
       </a-layout>
 
@@ -174,6 +174,7 @@
 </template>
 <script>
   // 导入组件
+  import userfooter from "../../components/userfooter";
   import usernav from "../../components/usernav";
   import {addComment, getComment, getMovie} from "../../api/axiosMovie";
   import { Message } from "element-ui";
@@ -210,6 +211,7 @@
       }
     },
     components: {
+      userfooter,
       usernav
     },
     methods: {
@@ -360,6 +362,12 @@
 </script>
 
 <style scoped>
+/*  a-textarea{*/
+/*    background: black !important;*/
+/*  }*/
+/*/deep/.ant-comment-inner{*/
+/*    background: transparent !important;*/
+/*  }*/
 .comment-title{
   font-weight: bold;
   font-size: 20px;
@@ -370,6 +378,15 @@
     color: rgba(0, 0, 0, 0.85);
     marginBottom: 16px;
     fontWeight: 500;
+}
+.detail-layout{
+
+}
+.detail-footer{
+  /*background: black;*/
+  color: black;
+  font-family: Verdana;
+  text-align: center;
 }
 </style>
 

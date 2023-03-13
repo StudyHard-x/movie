@@ -7,24 +7,24 @@
 <template>
     <div>
       <a-layout>
-        <a-layout-header class="header" style="height: 130px">
+        <a-layout-header class="header" style="height: 60px">
           <usernav></usernav>
         </a-layout-header>
 
-        <a-layout-content class="detail-layout" style="padding: 0 200px">
-          <a-layout style="padding: 24px 0; background: #fff; min-height: 560px; padding-left: 120px">
+        <a-layout-content class="detail-layout" style="background: black; padding: 0 200px">
+          <a-layout style="padding: 24px 0; background: black; min-height: 560px; padding-left: 120px">
             <span class="search-name">Search : {{searchName}}</span>
 
             <a-list item-layout="horizontal" size="large" :data-source="listData">
               <a-list-item slot="renderItem" key="item.title" slot-scope="item, index">
 
-                <a-layout-content>
+                <a-layout-content class="search-content">
                   <a-row :gutter="16">
                     <a-col :span="8">
-                      <p style="fontSize: 14px;color: rgba(0, 0, 0, 0.85); marginBottom: 16px;fontWeight: 500">
+                      <p style="fontSize: 14px; marginBottom: 16px;fontWeight: 500">
                         {{ item.movie_name }}
                       </p>
-                      <a-card hoverable style="width: 200px">
+                      <a-card hoverable style="width: 200px" @click="clickMovie(item)">
                         <img
                           slot="cover"
                           alt="example"
@@ -40,20 +40,20 @@
                       </a-layout-content>
 
                       <a-layout-content style="margin-top: 40px">
-                        <span>RATE</span><br><br>
+<!--                        <span>RATE</span><br><br>-->
                         <!--                    <a-rate v-model="value" />-->
                       </a-layout-content>
                     </a-col>
                   </a-row>
                 </a-layout-content>
               </a-list-item>
-
+              <a-divider v-show="index>1"></a-divider>
             </a-list>
           </a-layout>
         </a-layout-content>
 
-        <a-layout-footer style="text-align: center;">
-          Movies
+        <a-layout-footer class="search-footer">
+            <userfooter></userfooter>
         </a-layout-footer>
       </a-layout>
 
@@ -63,6 +63,7 @@
 </template>
 <script>
   // 导入组件
+  import userfooter from "../../components/userfooter";
   import usernav from "../../components/usernav";
   import {searchMovie} from "../../api/axiosMovie";
   export default {
@@ -86,6 +87,7 @@
       }
     },
     components: {
+      userfooter,
       usernav
     },
     methods: {
@@ -98,8 +100,18 @@
             },500)
           }
         })
-      }
+      },
+      clickMovie(movie){
+        // console.log(movie.id)
+        this.$router.push({
+          name: 'detail',
+          params: {
+            movieId: movie.id,
+          }
+        });
+      },
     },
+
     created() {
       this.searchName = this.$route.params.searchName
       this.serach(this.searchName)
@@ -113,8 +125,19 @@
 
 <style scoped>
   .search-name{
+    color: white;
     font-size: 25px;
     font-weight: bold;
+  }
+  .search-content{
+    font-family: Helvetica Neue;
+    color: white;
+  }
+  .search-footer{
+    background: black;
+    color: white;
+    font-family: Verdana;
+    text-align: center;
   }
 </style>
 

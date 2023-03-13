@@ -37,11 +37,13 @@
     },
     created() {
       const val = this.$route.params.sortName
+      const genre = this.$route.params.genre
       // console.log('sort change: ',val)
       this.$router.push({
         name: 'movies',
         params: {
           sortName: val,
+          genre: genre,
         }
       })
     },
